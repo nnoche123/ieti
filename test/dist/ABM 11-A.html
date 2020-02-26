@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+ 
+    <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Strand</th>
+                    <th>Section</th>
+                    <th>Year</th>
+                    <th>Gender</th>
+                    <th>Grades</th>
+                </tr>
+         {% for list in student %}
+                <tr>
+                    <td>{{list.name}}</td>
+                    <td>{{list.strand}}</td>
+                    <td>{{list.section}}</td>
+                    <td>{{list.year}}</td>
+                    <td>{{list.name}}</td>
+                    <td>{{list.name}}</td>
+                    <td><a href="">update</a></td>
+                </tr>
+         {% endfor %}
+        </table>
+    </div>
+   
+{% endblock content %}
