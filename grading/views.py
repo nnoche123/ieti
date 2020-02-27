@@ -81,7 +81,7 @@ def UpdateForms(request, pk):
 	    form = Update(request.POST, instance=student)
 	    if form.is_valid():
 		    form.save()
-		    return redirect('Teacher')
+		    return redirect('teacher')
 
     context = {'form':form}
     return render(request, 'grading/update_form.html', context)

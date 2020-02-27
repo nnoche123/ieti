@@ -12,7 +12,7 @@ class User(AbstractUser):
 
 class Teacher(models.Model):
     name = models.CharField(max_length=10)
-    subject = models.ManyToManyField(Subject)
+    subject = models.ForeignKey(Subject, blank=True, null=True, on_delete=models.SET_NULL)
 
 
     def __str__(self):
@@ -22,14 +22,14 @@ class Student(models.Model):
     YEAR_LEVEL = [('GR11','Grade 11'), ('G12','Grade 12')]
     SECTION = [('A', 'A'), ('B', 'B'), ('C', 'C')]
     SEX = [('MALE','MALE'),('FEMALE','FEMALE')]
-    name = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='Student')
+    name = models.OneToOneField(User, on_delete=models.CASCADE, related_name='Student')
     strand = models.ForeignKey(Strand, on_delete=models.CASCADE, related_name='Strand')
     year = models.CharField(max_length=10, choices=YEAR_LEVEL)
     sex = models.CharField(max_length=10, choices=SEX, default ='al')
     section = models.CharField(max_length=1, choices=SECTION)
-    grades = models.DecimalField(max_digits=100, decimal_places=2, default='0.0000')
+    grades = models.IntegerField(range(70, 95))
     teacher = models.ManyToManyField(Teacher)
-    subject = models.ManyToManyField(Subject)
+    subject = models.ForeignKey(Subject, blank=True, null=True, on_delete=models.SET_NULL)
     
 
     
