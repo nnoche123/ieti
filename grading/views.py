@@ -12,13 +12,14 @@ from.decorators import unauthenticated_user ,allowed_users
 
 from django.contrib.auth.decorators import login_required
 
+from .forms import Update
 
 
 @login_required(login_url='loginPage')
-@allowed_users(allowed_roles=['Teacher'])
-def dashboard(request):
+@allowed_users(allowed_roles=['admin'])
+def Teacher(request):
     student = Student.objects.all()
-    return render(request, 'grading/dashboard.html', {'student':student})
+    return render(request, 'grading/Teacher.html', {'student':student})
 
 @login_required(login_url='loginPage')
 def StudentGrades(request):
@@ -56,7 +57,7 @@ def loginPage(request):
             user = authenticate(request, username = username, password = password)
             if user is not None:
                 login(request, user)
-                return redirect('dashboard')
+                return redirect('teacher')
 
             else:
                     messages.info(request, 'Your Username or Password is incorrect.')
@@ -70,4 +71,18 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('loginPage')
+
+def UpdateForms(request, pk):
+    
+    student = Student.objects.get(id=pk)
+    form = Update(instance=student)
+
+    if request.method == 'POST':
+	    form = Update(request.POST, instance=student)
+	    if form.is_valid():
+		    form.save()
+		    return redirect('Teacher')
+
+    context = {'form':form}
+    return render(request, 'grading/update_form.html', context)
 

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users',
     'grading',
     'templates',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
