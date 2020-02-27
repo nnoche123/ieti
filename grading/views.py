@@ -8,21 +8,23 @@ from users.models import *
 from .models import *
 from django.contrib import messages
 
+from.decorators import unauthenticated_user ,allowed_users
+
 from django.contrib.auth.decorators import login_required
 
 
 
 @login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['Teacher'])
 def dashboard(request):
-    student = Student.objects.get(name=name)
-    student.subject.all()
+    student = Student.objects.all()
     return render(request, 'grading/dashboard.html', {'student':student})
 
 @login_required(login_url='loginPage')
 def StudentGrades(request):
-    Student.subject
-    Teacher.subject
-    return render(request, 'grading/Student.html', {'subject':subject})
+    student = Student.objects.all()
+
+    return render(request, 'grading/Student.html', {'student':student})
 
 
 def register(request):
@@ -42,7 +44,7 @@ def register(request):
 
         
         return render(request, 'grading/register.html', {'form': form} )
-
+@unauthenticated_user
 def loginPage(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
