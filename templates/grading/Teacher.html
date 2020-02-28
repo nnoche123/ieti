@@ -23,7 +23,7 @@
                     <td>{{list.year}}</td>
                     <td>{{list.sex}}</td>
                     <td>{{list.grades}}</td>
-                    <td><a href="">update</a></td>
+                    <td><a href="{% url 'UpdateForms' list.pk %}">update</a></td>
                 </tr>
          {% endfor %}
         </table>
