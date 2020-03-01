@@ -14,23 +14,34 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import Update
 
+from .filter import StudentFilter
+
 
 @login_required(login_url='loginPage')
-@allowed_users(allowed_roles=['admin'])
+def Dashboard(request):
+    return render(request, 'grading/Dashboard.html')
+
+@login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['Teachers', 'admin'])
 def Teacher(request):
+  
     student = Student.objects.all()
-    return render(request, 'grading/Teacher.html', {'student':student})
+    myFilter = StudentFilter(request.GET, queryset=student)
+
+    orders = myFilter.qs
+    context = {'student':student, 'myFilter':myFilter}
+    
+    return render(request, 'grading/Teacher.html',context)
 
 @login_required(login_url='loginPage')
+@allowed_users(allowed_roles=['Students', 'admin'])
 def StudentGrades(request):
-    student = Student.objects.all()
-
+    student = Student.objects.filter(teacher__id= pk )
     return render(request, 'grading/Student.html', {'student':student})
-
 
 def register(request):
     if request.user.is_authenticated:
-        return redirect('dashboard')
+        return redirect('loginPage')
     else:
         form = UserRegisterForm(request.POST)
 
@@ -45,11 +56,9 @@ def register(request):
 
         
         return render(request, 'grading/register.html', {'form': form} )
+
 @unauthenticated_user
 def loginPage(request):
-    if request.user.is_authenticated:
-        return redirect('dashboard')
-    else:
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
@@ -57,7 +66,7 @@ def loginPage(request):
             user = authenticate(request, username = username, password = password)
             if user is not None:
                 login(request, user)
-                return redirect('teacher')
+                return redirect('Dashboard')
 
             else:
                     messages.info(request, 'Your Username or Password is incorrect.')
@@ -65,11 +74,7 @@ def loginPage(request):
         context = {}
         return render(request, 'grading/login.html', context)
 
-
-
-
 def logoutUser(request):
-    logout(request)
     return redirect('loginPage')
 
 def UpdateForms(request, pk):

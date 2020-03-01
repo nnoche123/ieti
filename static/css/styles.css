@@ -54,7 +54,6 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #ffffff;
   text-align: leFt;
   background-image: url("file:///C:/Users/ASUS%20PC/Downloads/Thesis.zip/SEMESTRAL%20GRADE%20VIEWER/dist/images.jpeg");
   
@@ -4395,7 +4394,7 @@ input[type=button].btn-block {
 .card-body {
   flex: 1 1 auto;
   min-height: 1px;
-  padding: 4.25rem;
+  padding: 1rem;
   
 }
 
