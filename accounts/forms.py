@@ -13,8 +13,8 @@ class StudentForm(ModelForm):
 
 class OrderForm(ModelForm):
 	class Meta:
-		model = Subject
-		fields = '__all__'
+		model = StudentSubject
+		fields = ['grades']
 
 
 class CreateUserForm(UserCreationForm):

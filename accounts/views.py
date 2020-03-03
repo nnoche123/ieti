@@ -119,16 +119,15 @@ def products(request):
 @allowed_users(allowed_roles=['teacher'])
 def home(request):
 	teacher = Teacher.objects.get(name=request.user.username)
+	print(teacher)
+	subjects = teacher.studentsubject_set.all()
+	
 
-	subjectstudent = teacher.studentsubject_set.all()
-	# student = StudentSubject.objects
-	# order_count = orders.count()
+	# myFilter = OrderFilter(request.GET, queryset=subjects)
+	# orders = myFilter.qs 
 
-	myFilter = OrderFilter(request.GET, queryset=subjectstudent)
-	orders = myFilter.qs 
-
-	context = {'teacher':teacher, 'subjectstudent':subjectstudent,
-	'myFilter':myFilter}
+	context = {'teacher':teacher, 'subjects':subjects, }
+	# 'myFilter':myFilter}
 
 
 	return render(request, 'accounts/teacher.html',context)
@@ -154,12 +153,12 @@ def createOrder(request, pk):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['teacher'])
 def updateOrder(request, pk):
-	subject = Subject.objects.get(id=pk)
-	form = OrderForm(instance=subject)
-	print('ORDER:', subject)
+	grades = StudentSubject.objects.get(id=pk)
+	form = OrderForm(instance=grades)
+	print('ORDER:', grades)
 	if request.method == 'POST':
 
-		form = OrderForm(request.POST, instance=subject)
+		form = OrderForm(request.POST, instance=grades)
 		if form.is_valid():
 			form.save()
 			return redirect('/')
