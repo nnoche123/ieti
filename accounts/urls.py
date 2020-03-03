@@ -11,7 +11,13 @@ urlpatterns = [
 	path('login/', views.loginPage, name="login"),  
 	path('logout/', views.logoutUser, name="logout"),
 
+    #teacher
     path('', views.home, name="home"),
+
+
+    # students
+    path('grades/', views.grades, name="grades"),
+
     path('user/', views.userPage, name="user-page"),
 
     path('account/', views.accountSettings, name="account"),

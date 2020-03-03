@@ -46,7 +46,10 @@ def loginPage(request):
 
 		if user is not None:
 			login(request, user)
-			return redirect('home')
+			if request.user.groups.all()[0].name == 'student':
+				return redirect('grades')
+			else:
+				return redirect('home')
 		else:
 			messages.info(request, 'Username OR password is incorrect')
 
@@ -76,19 +79,9 @@ def logoutUser(request):
 	# return render(request, 'accounts/dashboard.html')
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['teacher'])
+@allowed_users(allowed_roles=['student'])
 def userPage(request):
-	orders = request.user.teacher.order_set.all()
-	
-	total_orders = orders.count()
-	delivered = orders.filter(status='Delivered').count()
-	pending = orders.filter(status='Pending').count()
-
-	print('ORDERS:', orders)
-
-	context = {'orders':orders, 'total_orders':total_orders,
-	'delivered':delivered,'pending':pending}
-	return render(request, 'accounts/user.html', context)
+	return render(request, 'accounts/about.html')
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['teacher'])
@@ -108,6 +101,8 @@ def accountSettings(request):
 
 
 
+
+
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['teacher'])
 def products(request):
@@ -116,18 +111,38 @@ def products(request):
 	return render(request, 'accounts/products.html', {'products':products})
 
 @login_required(login_url='login')
+def grades(request):
+	# student = Student.objects.get(name=request.user.username)
+
+	student = Student.objects.get(user_id=request.user.id)
+
+	grades = student.studentsubject_set.all()
+
+	myFilter = OrderFilter(request.GET, queryset=grades)
+	grades = myFilter.qs 
+
+	context = { 'grades':grades,
+	'myFilter':myFilter}
+	print(grades)
+
+	return render(request, 'accounts/student.html',context)
+
+
+
+
+@login_required(login_url='login')
 @allowed_users(allowed_roles=['teacher'])
 def home(request):
 	teacher = Teacher.objects.get(name=request.user.username)
 	print(teacher)
 	subjects = teacher.studentsubject_set.all()
-	
+	students = Student.objects.all()
 
-	# myFilter = OrderFilter(request.GET, queryset=subjects)
-	# orders = myFilter.qs 
+	myFilter = OrderFilter(request.GET, queryset=students)
+	students = myFilter.qs 
 
-	context = {'teacher':teacher, 'subjects':subjects, }
-	# 'myFilter':myFilter}
+	context = {'teacher':teacher, 'subjects':subjects, 'students':students,
+	'myFilter':myFilter}
 
 
 	return render(request, 'accounts/teacher.html',context)

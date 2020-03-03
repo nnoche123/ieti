@@ -1,0 +1,80 @@
+{%  extends 'accounts/main.html' %}
+
+{% block content %}
+
+	<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Student:</h5>
+			<hr>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Teacher</a>
+			<a class="btn btn-outline-info  btn-sm btn-block" href="">Place Subject</a>
+
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Contact Information</h5>
+			<hr>
+			<p>Email: {{student.name}}</p>
+			<p>Phone: {{student.phone}}</p>
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Total Subjects</h5>
+			<hr>
+			<h1 style="text-align: center;padding: 10px"></h1>
+		</div>
+	</div>
+</div>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+
+			<form method="get">
+				{{myFilter.form}}
+
+		    <button class="btn btn-primary" type="submit">Search</button>
+		  </form>
+
+		</div>
+	</div>
+	
+</div>
+<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<table class="table table-sm " id="tests-table">
+				<tr>
+					<th>Subject</th>
+					<th>Teacher</th>
+					<th>Grades</th>
+
+
+				{% for student in grades %}
+
+				<tr>
+					<td>{{ student.subject }}</td>
+					<td>{{student.teacher}}</td>
+					<td>{{student.grades}}</td>
+	
+											
+					
+				{% endfor %} 
+
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

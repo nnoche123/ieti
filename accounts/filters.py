@@ -15,7 +15,7 @@ class OrderFilter(django_filters.FilterSet):
 	class Meta:
 		model = Student
 		fields = '__all__'
-		exclude = ['profile_pic']
+		exclude = ['profile_pic', 'user']
 		# exclude = ['profile_pic']
 		# filter_overrides = {
         #      models.CharField: {
