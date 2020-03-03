@@ -76,19 +76,9 @@ def logoutUser(request):
 	# return render(request, 'accounts/dashboard.html')
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['teacher'])
+@allowed_users(allowed_roles=['student'])
 def userPage(request):
-	orders = request.user.teacher.order_set.all()
-	
-	total_orders = orders.count()
-	delivered = orders.filter(status='Delivered').count()
-	pending = orders.filter(status='Pending').count()
-
-	print('ORDERS:', orders)
-
-	context = {'orders':orders, 'total_orders':total_orders,
-	'delivered':delivered,'pending':pending}
-	return render(request, 'accounts/user.html', context)
+	return render(request, 'accounts/student.html')
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['teacher'])
@@ -104,6 +94,8 @@ def accountSettings(request):
 
 	context = {'form':form}
 	return render(request, 'accounts/account_settings.html', context)
+
+
 
 
 
