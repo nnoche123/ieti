@@ -61,7 +61,12 @@
 					<th>Year Level</th>
 					<th>Section</th>
 					<th>Subject</th>
-					<th>Grades</th>
+					<th>Midterm</th>
+					<th>finals</th>
+					<th>Average</th>
+					<th>Midterm</th>
+					<th>finals</th>
+					<th>Average</th>
 					<th>Mark</th>
 
 				</tr>
@@ -74,7 +79,12 @@
 					<td>{{student.student.year_level}}</td>
 					<td>{{student.student.section}}</td>
 					<td>{{ student.subject }}</td>
-					<td>{{student.grades}}</td>
+					<td>{{student.FSMTgrades}}</td>
+					<td>{{student.FSFgrades}}</td>
+					<td>{{student.FSgrades}}</td>
+					<td>{{student.SSMTgrades}}</td>
+					<td>{{student.SSFgrades}}</td>
+					<td>{{student.SFgrades}}</td>
 					<td><a class="btn btn-sm btn-info" href="{% url 'update_order' student.id %}">Mark</a></td>
 
 				</tr>

@@ -112,17 +112,16 @@ def products(request):
 
 @login_required(login_url='login')
 def grades(request):
-	# student = Student.objects.get(name=request.user.username)
+	student = Student.objects.get(name = request.user.username)
 
-	student = Student.objects.get(user_id=request.user.id)
-
+	students = Student.objects.get(user= request.user.id)
+	
 	grades = student.studentsubject_set.all()
 
 	myFilter = OrderFilter(request.GET, queryset=grades)
-	grades = myFilter.qs 
+	grades = myFilter.qs
 
-	context = { 'grades':grades,
-	'myFilter':myFilter}
+	context = {'grades':grades, 'myFilter':myFilter, 'students':students, 'student':student }
 	print(grades)
 
 	return render(request, 'accounts/student.html',context)
@@ -150,12 +149,12 @@ def home(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['teacher'])
 def createOrder(request, pk):
-	OrderFormSet = inlineformset_factory(Teacher, Subject, fields=('student', 'status'), extra=10)
+	OrderFormSet = inlineformset_factory(Teacher, Subjects, fields=('name','strand','year_level'), extra=10)
 	teacher = Teacher.objects.get(id=pk)
 	formset = OrderFormSet(queryset=Subject.objects.none(),instance=teacher)
-	#form = OrderForm(initial={'teacher':teacher})
+	form = OrderForm(initial={'teacher':teacher})
 	if request.method == 'POST':
-		#print('Printing POST:', request.POST)
+		print('Printing POST:', request.POST)
 		form = OrderForm(request.POST)
 		formset = OrderFormSet(request.POST, instance=teacher)
 		if formset.is_valid():

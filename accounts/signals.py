@@ -3,13 +3,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 
 
-from .models import Teacher
+from .models import Student
 
 def student_profile(sender, instance, created, **kwargs):
 	if created:
 		group = Group.objects.get(name='student')
 		instance.groups.add(group)
-		Teacher.objects.create(
+		Student.objects.create(
 			user=instance,
 			name=instance.username,
 			)

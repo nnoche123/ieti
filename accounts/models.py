@@ -31,7 +31,6 @@ class Student(models.Model):
     strand = models.CharField(max_length=10, choices=STRAND)
     year_level = models.CharField(max_length=10, choices=YEAR_LEVEL)
     section = models.CharField(max_length=1, choices=SECTION)
-
     subject = models.ManyToManyField(Subject, through='StudentSubject',
 											  through_fields=('student', 'subject'))
     profile_pic = models.ImageField(default="profile1.png", null=True, blank=True)
@@ -44,7 +43,14 @@ class StudentSubject(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    grades = models.PositiveSmallIntegerField(blank=True, null=True)
+    grades = models.PositiveSmallIntegerField(blank=True, null=True)  
+    FSMTgrades = models.PositiveSmallIntegerField(blank=True, null=True)
+    FSFgrades = models.PositiveSmallIntegerField(blank=True, null=True)
+    FSgrades = models.PositiveSmallIntegerField(blank=True, null=True)
+    SSMTgrades = models.PositiveSmallIntegerField(blank=True, null=True)
+    SSFgrades = models.PositiveSmallIntegerField(blank=True, null=True)
+    SFgrades = models.PositiveSmallIntegerField(blank=True, null=True)
+ 
 
     def __str__(self):
         return self.subject.name

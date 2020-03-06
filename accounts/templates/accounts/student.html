@@ -19,7 +19,7 @@
 		<div class="card card-body">
 			<h5>Contact Information</h5>
 			<hr>
-			<p>Email: {{student.name}}</p>
+			<p>Name: {{student.name}}</p>
 			<p>Phone: {{student.phone}}</p>
 		</div>
 	</div>
@@ -35,21 +35,6 @@
 
 
 <br>
-<div class="row">
-	<div class="col">
-		<div class="card card-body">
-
-			<form method="get">
-				{{myFilter.form}}
-
-		    <button class="btn btn-primary" type="submit">Search</button>
-		  </form>
-
-		</div>
-	</div>
-	
-</div>
-<br>
 
 <div class="row">
 	<div class="col-md">
@@ -58,16 +43,24 @@
 				<tr>
 					<th>Subject</th>
 					<th>Teacher</th>
-					<th>Grades</th>
-
+					<th>Midterm</th>
+					<th>finals</th>
+					<th>Average</th>
+					<th>Midterm</th>
+					<th>finals</th>
+					<th>Average</th>
 
 				{% for student in grades %}
 
 				<tr>
 					<td>{{ student.subject }}</td>
 					<td>{{student.teacher}}</td>
-					<td>{{student.grades}}</td>
-	
+					<td>{{student.FSMTgrades}}</td>
+					<td>{{student.FSFgrades}}</td>
+					<td>{{student.FSgrades}}</td>
+					<td>{{student.SSMTgrades}}</td>
+					<td>{{student.SSFgrades}}</td>
+					<td>{{student.SFgrades}}</td>
 											
 					
 				{% endfor %} 
