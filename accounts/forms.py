@@ -14,7 +14,8 @@ class StudentForm(ModelForm):
 class OrderForm(ModelForm):
 	class Meta:
 		model = StudentSubject
-		fields = ['grades']
+		fields = ['FSMTgrades','FSFgrades','FSgrades',
+				'SSMTgrades','SSFgrades','SFgrades']
 
 
 class CreateUserForm(UserCreationForm):
