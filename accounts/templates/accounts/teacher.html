@@ -1,5 +1,5 @@
 {%  extends 'accounts/main.html' %}
-
+{%  include 'accounts/status.html' %}
 {% block content %}
 
 	<br>
@@ -7,8 +7,7 @@
 <div class="row">
 	<div class="col-md">
 		<div class="card card-body">
-			<h5>Teacher:</h5>
-			<hr>
+
 			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Teacher</a>
 			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'create_order' teacher.id %}">Place Subject</a>
 
@@ -19,7 +18,7 @@
 		<div class="card card-body">
 			<h5>Contact Information</h5>
 			<hr>
-			<p>Email: {{teacher.name}}</p>
+			<p>Name: {{teacher.name}}</p>
 			<p>Phone: {{teacher.phone}}</p>
 		</div>
 	</div>
@@ -28,6 +27,7 @@
 		<div class="card card-body">
 			<h5>Total Students</h5>
 			<hr>
+			<h1 style="text-align: center;padding: 10px">{{total_students}}</h1>
 			<h1 style="text-align: center;padding: 10px"></h1>
 		</div>
 	</div>

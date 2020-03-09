@@ -13,7 +13,7 @@ from django.contrib.auth.models import Group
 # Create your views here.
 from .models import *
 from .forms import OrderForm, CreateUserForm, StudentForm
-from .filters import OrderFilter
+from .filters import SubjectFilter
 from .decorators import unauthenticated_user, allowed_users, admin_only
 
 @unauthenticated_user
@@ -60,23 +60,7 @@ def logoutUser(request):
 	logout(request)
 	return redirect('login')
 
-# @login_required(login_url='login')
-# @allowed_users(allowed_roles=['teacher'])
-# def home(request):
-	# orders = Subject.objects.all()
-	# students = Teacher.objects.all()
 
-	# total_students = students.count()
-
-	# total_orders = orders.count()
-	# delivered = orders.filter(status='Delivered').count()
-	# pending = orders.filter(status='Pending').count()
-
-	# context = {'orders':orders, 'students':students,
-	# 'total_orders':total_orders,'delivered':delivered,
-	# 'pending':pending }
-
-	# return render(request, 'accounts/dashboard.html')
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['student'])
@@ -118,7 +102,7 @@ def grades(request):
 
 	grades = student.studentsubject_set.all()
 
-	myFilter = OrderFilter(request.GET, queryset=grades)
+	myFilter = SubjectFilter(request.GET, queryset=grades)
 	grades = myFilter.qs 
 
 	context = { 'grades':grades,
@@ -136,12 +120,13 @@ def home(request):
 	teacher = Teacher.objects.get(name=request.user.username)
 	print(teacher)
 	subjects = teacher.studentsubject_set.all()
-	students = Student.objects.all()
+	# students = subjects.student_set.all()
+	total_students = subjects.count()
 
-	myFilter = OrderFilter(request.GET, queryset=students)
-	students = myFilter.qs 
+	myFilter = SubjectFilter(request.GET, queryset=subjects)
+	subjects = myFilter.qs 
 
-	context = {'teacher':teacher, 'subjects':subjects, 'students':students,
+	context = {'teacher':teacher, 'subjects':subjects, 'total_students':total_students,
 	'myFilter':myFilter}
 
 
